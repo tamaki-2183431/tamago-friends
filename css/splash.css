@@ -1,0 +1,105 @@
+/*
+ * 起動スプラッシュ（v46）— B案「ポンポン」
+ * デザイン仕様: splash_handoff/README.md（色・座標はすべてここに準拠）
+ * ロゴフォント: Zen Maru Gothic（SIL OFL）— 7文字サブセットを同梱（オフライン対応）
+ */
+@font-face {
+  font-family: 'ZMG Splash';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url('../assets/fonts/zen-maru-gothic-900-splash.woff2') format('woff2');
+  unicode-range: U+3053-3054, U+305f-3060, U+307e, U+3099, U+30b9-30ba, U+30d5-30d6, U+30ec, U+30f3;
+}
+
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: linear-gradient(160deg, #fff3cf 0%, #ffe08a 38%, #ffc768 70%, #ffa85e 100%);
+}
+#splash[data-phase='out'] {
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.splash-glow {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+.splash-glow--1 {
+  left: -260px;
+  top: 120px;
+  width: 1100px;
+  height: 1100px;
+  background: radial-gradient(closest-side, rgba(255, 250, 228, 0.95), rgba(255, 240, 190, 0));
+}
+.splash-glow--2 {
+  right: -300px;
+  bottom: -260px;
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(closest-side, rgba(255, 150, 80, 0.35), rgba(255, 150, 80, 0));
+}
+
+.splash-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1080px;
+  height: 1920px;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.splash-egg-wrap {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+.splash-egg {
+  position: absolute;
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+.splash-egg svg {
+  position: absolute;
+  left: 0;
+  top: -10%;
+  overflow: visible;
+}
+.splash-shadow {
+  position: absolute;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(196, 110, 30, 0.3), rgba(196, 110, 30, 0));
+  will-change: width, left, opacity;
+}
+.splash-spark {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+}
+.splash-logo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1250px;
+  display: flex;
+  justify-content: center;
+  font-family: 'ZMG Splash', sans-serif;
+  font-weight: 900;
+  font-size: 128px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.splash-logo__ch {
+  display: inline-block;
+  opacity: 0;
+  transform-origin: 50% 100%;
+  color: #a4561f;
+  -webkit-text-stroke: 22px #fffdf6;
+  paint-order: stroke fill;
+  filter: drop-shadow(0 10px 0 rgba(200, 110, 30, 0.22));
+}

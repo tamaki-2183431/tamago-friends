@@ -10,7 +10,7 @@
  * - **guide.html は precache しない**（約380KB の単体HTML。ゲームを起動するだけの端末に
  *   常時ぶら下げる価値がない）。オフラインでは SPA シェルの代わりに返さない＝素直に失敗させる。
  */
-const VERSION = 'v45';
+const VERSION = 'v46';
 const CACHE = `tamago-friends-${VERSION}`;
 
 /** あそびかたガイド（v41）。precache しないので、オフラインではシェルを返さず失敗させる対象 */
@@ -32,6 +32,7 @@ const ASSETS = [
   './css/base.css',
   './css/child.css',
   './css/parent.css',
+  './css/splash.css',
   './js/app.js',
   './js/db.js',
   './js/version.js',
@@ -57,6 +58,7 @@ const ASSETS = [
   './js/qr/gen.js',
   './js/qr/scan.js',
   './js/ui/dom.js',
+  './js/ui/splash.js',
   './js/ui/child.js',
   './js/ui/parent.js',
   './js/ui/qr-sheet.js',
@@ -89,6 +91,7 @@ const ASSETS = [
   './data/prefectures.js',
   './data/shop.js',
   './data/rewards.js',
+  './assets/fonts/zen-maru-gothic-900-splash.woff2',
   './vendor/qrcode.js',
   './vendor/jsQR.js',
   './icons/icon-192.png',
