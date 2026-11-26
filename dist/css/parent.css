@@ -1,0 +1,840 @@
+/* 親画面 — 控えめで読みやすい。スマホ縦 375px 優先、PC でも操作可能 */
+
+body[data-page='parent'] {
+  background: #f6f4fa;
+}
+
+.parent-app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 14px 14px calc(28px + var(--safe-bottom));
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---------------------------------------------------------------- ヘッダー */
+
+.p-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 2px 10px;
+}
+
+.p-head--plain {
+  justify-content: center;
+  padding-top: 18px;
+}
+
+.p-head__eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.p-head__title {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.p-head__actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ---------------------------------------------------------------- タブ */
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: #ece6f4;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 6px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.tab--on {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(72, 52, 96, 0.1);
+}
+
+.p-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+
+/* 版（v24）。コンテンツの最下部に控えめに1行だけ置く */
+.p-foot {
+  padding: 18px 0 2px;
+}
+
+/* v41: あそびかたガイド。版表示の上に置く */
+.p-foot .guide-link {
+  margin-bottom: 10px;
+}
+
+.p-main--narrow {
+  max-width: 460px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.p-main--center {
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------------- こども一覧 */
+
+.child-row {
+  text-decoration: none;
+  color: inherit;
+  gap: 10px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.child-row:active {
+  transform: scale(0.995);
+}
+
+.child-row__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.child-row__emoji {
+  font-size: 30px;
+  line-height: 1;
+  flex: none;
+}
+
+.child-row__names {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.child-row__name {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.child-row__sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.child-row__chevron {
+  font-size: 22px;
+  color: var(--muted);
+}
+
+.child-row__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.child-row__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ---------------------------------------------------------------- こども詳細 */
+
+.child-summary__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.child-summary__emoji {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.child-summary__name {
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.stat {
+  background: #faf7ff;
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat__label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  /* 「次の孵化まで」が語の途中で折り返さないようにする */
+  word-break: keep-all;
+  line-height: 1.35;
+}
+
+.label-narrow {
+  display: none;
+}
+
+.stat__value {
+  font-size: 19px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------- 点数リスト */
+
+.score-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.score-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+  padding: 10px;
+  border-radius: 14px;
+  background: #faf7ff;
+}
+
+.score-item__main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1 1 100%;
+}
+
+.score-item__points {
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--ok);
+  font-variant-numeric: tabular-nums;
+  min-width: 60px;
+  text-align: right;
+  flex: none;
+}
+
+.score-item__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.score-item__name {
+  font-weight: 700;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score-item__meta {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.score-item__actions {
+  display: flex;
+  gap: 4px;
+  flex: none;
+  margin-left: auto;
+}
+
+.score-item__actions .btn {
+  min-height: 36px;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+/* ---------------------------------------------------------------- 監査 */
+
+.audit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.audit-item {
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #faf7ff;
+}
+
+.audit-item__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12.5px;
+}
+
+.audit-item__type {
+  font-weight: 800;
+}
+
+.audit-item__at {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.audit-item__detail {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* ---------------------------------------------------------------- ごほうび */
+
+.emoji-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.emoji-choice {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.reward-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reward-admin__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #faf7ff;
+}
+
+.reward-admin__title {
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.request-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.request-admin__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background: #faf7ff;
+  border-left: 4px solid #ddd2ee;
+}
+
+.request-admin__item--pending {
+  border-left-color: var(--sun);
+  background: #fffaef;
+}
+
+.request-admin__item--approved {
+  border-left-color: var(--ok);
+}
+
+.request-admin__item--rejected {
+  border-left-color: var(--danger);
+}
+
+.request-admin__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.request-admin__title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- データ */
+
+.snapshot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.snapshot-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background: #faf7ff;
+  flex-wrap: wrap;
+}
+
+.snapshot-item__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- PIN */
+
+.pin-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 24px 18px;
+  box-shadow: var(--shadow);
+  width: 100%;
+}
+
+.pin-panel__label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.pin-panel__title {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.pin-panel--error {
+  animation: pin-shake 0.4s ease;
+}
+
+@keyframes pin-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-7px);
+  }
+  75% {
+    transform: translateX(7px);
+  }
+}
+
+.pin-dots {
+  display: flex;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.pin-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #d9cfe8;
+  background: #fff;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.pin-dot--on {
+  background: var(--grape);
+  border-color: var(--grape);
+  transform: scale(1.08);
+}
+
+.pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.pin-key {
+  min-height: 56px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pin-key:active {
+  background: #f1ebfa;
+}
+
+.pin-key--sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: #f7f3fc;
+}
+
+/* ---------------------------------------------------------------- 幅の調整 */
+
+@media (max-width: 359px) {
+  /* 320px 幅では「次の孵化まで」を「次まで」に短縮して語中折返しを避ける */
+  .label-wide {
+    display: none;
+  }
+  .label-narrow {
+    display: inline;
+  }
+  .parent-app {
+    padding: 10px 10px calc(20px + var(--safe-bottom));
+  }
+  .card {
+    padding: 14px;
+  }
+  .p-head__title {
+    font-size: 18px;
+  }
+  .tab {
+    font-size: 13px;
+  }
+  .stat__value {
+    font-size: 17px;
+  }
+  .score-item {
+    flex-wrap: wrap;
+  }
+  .score-item__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* ---------------------------------------------------------------- 再送・訂正履歴 */
+
+.resend {
+  border-top: 1px dashed var(--line);
+  padding-top: 10px;
+  margin-top: 2px;
+}
+
+.resend__summary {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.resend > p {
+  margin: 6px 0 10px;
+}
+
+.resend .button-row {
+  flex-direction: column;
+}
+
+.correction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.correction-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #faf7ff;
+}
+
+.correction-item__points {
+  min-width: 64px;
+  text-align: right;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.correction-item__points.is-minus {
+  color: var(--danger);
+}
+
+.correction-item__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.correction-item__name {
+  font-size: 13.5px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: normal;
+}
+
+.correction-item__meta {
+  font-size: 11.5px;
+  color: var(--muted);
+  word-break: normal;
+}
+
+@media (max-width: 359px) {
+  .correction-item__meta {
+    font-size: 11px;
+  }
+}
+
+/* ---------------------------------------------------------------- ごほうびメモ */
+
+.memo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.memo-item {
+  padding: 10px;
+  border-radius: 14px;
+  background: #faf7ff;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.memo-item__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.memo-item__points {
+  font-weight: 900;
+  font-size: 14px;
+  color: #8a5a00;
+  font-variant-numeric: tabular-nums;
+}
+
+.memo-item__date {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.memo-item__row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.memo-input {
+  flex: 1;
+  min-height: 44px;
+}
+
+@media (max-width: 359px) {
+  .memo-item__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ---------------------------------------------------------------- 初期化モード */
+
+.radio-card {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.radio-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.radio-card .radio {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--grape);
+}
+
+@media (max-width: 359px) {
+  .radio-card {
+    padding: 8px 10px;
+  }
+}
+
+/* ---------------------------------------------------------------- 危険な操作（家族データの初期化・v29） */
+
+.danger-list {
+  margin: 0;
+  padding-left: 1.15em;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.danger-list li + li {
+  margin-top: 1px;
+}
+
+.check-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13.5px;
+  line-height: 1.6;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.check-row__label {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.check-row__label strong {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 800;
+}
+
+.check-row__label .small {
+  display: block;
+  margin-top: 2px;
+}
+
+.check-row .check {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--danger);
+}
+
+.check-row--sub {
+  padding: 8px 0 0;
+  border-top: 1px dashed var(--line);
+}
+
+.reset-status {
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.btn--danger:disabled {
+  opacity: 0.55;
+}
+
+#factoryResetButton {
+  min-height: 44px;
+  line-height: 1.5;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 359px) {
+  .danger-list,
+  .check-row,
+  .check-row__label strong {
+    font-size: 12.5px;
+  }
+}
+
+/* ---------------------------------------------------------------- v31: 初期化前の保存ステップ */
+
+.reset-backup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbf9fd;
+  overflow-wrap: anywhere;
+}
+
+.reset-backup .card__subtitle {
+  margin: 0;
+}
+
+.reset-backup .check-row {
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+}
+
+.reset-backup .check-row .check:disabled {
+  opacity: 0.4;
+}
+
+.reset-backup .check-row:has(.check:disabled) {
+  cursor: default;
+  color: var(--ink-soft);
+}
+
+.reset-backup .btn {
+  min-height: 44px;
+}
