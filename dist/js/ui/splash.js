@@ -99,6 +99,23 @@ function eggSvg(egg) {
   const stage = document.getElementById('splashStage');
   if (!overlay || !stage) return;
 
+  // v48: 1日最初の1回だけ再生する（端末のローカル日付で判定・のろしアプリと同じ運用）
+  // index.html と parent.html は同一オリジンなので端末で共通の判定になる
+  const SPLASH_DAY_KEY = 'tamago:splash-last-day';
+  const today = (() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  })();
+  try {
+    if (localStorage.getItem(SPLASH_DAY_KEY) === today) {
+      overlay.remove(); // 今日もう再生済み: overlayを即取り除いて本体へ
+      return;
+    }
+    localStorage.setItem(SPLASH_DAY_KEY, today);
+  } catch (error) {
+    /* ストレージが使えない環境（プライベートモード等）では従来どおり毎回再生 */
+  }
+
   try {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
