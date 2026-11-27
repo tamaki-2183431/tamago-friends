@@ -15,6 +15,7 @@ const STAGE_W = 1080;
 const STAGE_H = 1920;
 const FLOOR = 1120;
 const HOLD_T = 1.5; // ロゴ完成（静止）時刻
+const HOLD_EXTRA = 1.0; // ロゴ完成後の余韻（v47: 実機フィードバック「文字が出たらすぐ本体へ切り替わる」への対応）
 const FALL = 0.24; // 落下時間
 const SPARK_T0 = 0.82;
 const LOGO_T0 = 0.86;
@@ -105,6 +106,7 @@ function eggSvg(egg) {
       const wrap = document.createElement('div');
       wrap.className = 'splash-egg-wrap';
       wrap.style.zIndex = egg.z;
+      wrap.style.visibility = 'hidden'; // 1フレーム目の render() まで隠す（v47: 初期フレームの静止画フラッシュ防止）
       const body = document.createElement('div');
       body.className = 'splash-egg';
       body.style.left = `${egg.x - egg.w / 2}px`;
@@ -228,14 +230,20 @@ function eggSvg(egg) {
       overlay.dataset.phase = 'out';
       setTimeout(() => overlay.remove(), 240);
     }
+    /** アニメ完了とappReadyの両方がそろったら、余韻（HOLD_EXTRA）を見せてから抜ける */
+    let exitTimer = null;
+    function scheduleExit() {
+      if (exited || exitTimer) return;
+      exitTimer = setTimeout(exit, HOLD_EXTRA * 1000);
+    }
     window.addEventListener('tamago:app-ready', () => {
       appReady = true;
-      if (animDone) exit();
+      if (animDone) scheduleExit();
     });
     // 本体初期化が極端に遅い/失敗しても、アプリを閉ざさないための安全弁
     setTimeout(() => {
       appReady = true;
-      if (animDone) exit();
+      if (animDone) scheduleExit();
     }, 4000);
 
     if (reduced) {
@@ -253,11 +261,8 @@ function eggSvg(egg) {
       render(t, t);
       if (t >= HOLD_T) {
         animDone = true;
-        if (appReady) {
-          exit();
-        } else {
-          holdLoop();
-        }
+        holdLoop(); // 余韻の間も光だまりは漂わせ続ける
+        if (appReady) scheduleExit();
         return;
       }
       requestAnimationFrame(frame);
@@ -276,7 +281,7 @@ function eggSvg(egg) {
     const fontLoad = document.fonts
       ? document.fonts.load('900 64px "ZMG Splash"', LOGO_TEXT)
       : Promise.resolve();
-    Promise.race([fontLoad, new Promise((r) => setTimeout(r, 800))]).then(
+    Promise.race([fontLoad, new Promise((r) => setTimeout(r, 300))]).then(
       () => requestAnimationFrame(frame),
       () => requestAnimationFrame(frame)
     );
