@@ -10,7 +10,7 @@
  * - **guide.html は precache しない**（約380KB の単体HTML。ゲームを起動するだけの端末に
  *   常時ぶら下げる価値がない）。オフラインでは SPA シェルの代わりに返さない＝素直に失敗させる。
  */
-const VERSION = 'v47';
+const VERSION = 'v48';
 const CACHE = `tamago-friends-${VERSION}`;
 
 /** あそびかたガイド（v41）。precache しないので、オフラインではシェルを返さず失敗させる対象 */

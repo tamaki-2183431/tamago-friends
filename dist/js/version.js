@@ -9,7 +9,7 @@
  *   とは独立。統合しない。
  */
 
-export const APP_VERSION = 'v47';
+export const APP_VERSION = 'v48';
 export const BUILD_DATE = '2026-11-27';
 
 /** 子ども画面「せってい」の最下部に出す1行 */
