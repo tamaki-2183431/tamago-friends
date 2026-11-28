@@ -444,6 +444,8 @@ body[data-page='parent'] {
   padding: 24px 18px;
   box-shadow: var(--shadow);
   width: 100%;
+
+  touch-action: manipulation; /* PIN連打でのダブルタップズーム防止（v50） */
 }
 
 .pin-panel__label {

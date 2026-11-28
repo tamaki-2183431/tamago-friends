@@ -71,6 +71,7 @@ video {
 }
 
 button {
+  touch-action: manipulation; /* ダブルタップズームを無効化（v50）・ピンチズームは残す */
   font: inherit;
   color: inherit;
 }
