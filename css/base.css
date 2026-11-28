@@ -304,15 +304,21 @@ button {
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px 14px;
+}
+
+/* ネイティブ入力（date 等）の最小幅がセルを押し広げ、隣の入力と
+   接して見える実機の崩れ（v49）を防ぐ。はみ出しは折返しで回避 */
+.form-grid .input {
+  min-width: 0;
 }
 
 .field--wide {
   grid-column: 1 / -1;
 }
 
-@media (max-width: 359px) {
+@media (max-width: 419px) {
   .form-grid {
     grid-template-columns: 1fr;
   }

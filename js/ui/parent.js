@@ -147,6 +147,7 @@ function renderSetup() {
 
 function renderLock(family) {
   let buffer = '';
+  let submitTimer = 0;
   const dots = el('div', { class: 'pin-dots', 'aria-live': 'polite' });
   const error = el('p', { class: 'form-error', id: 'pinError', hidden: true });
   const pad = el('div', { class: 'pin-pad', id: 'pinPad' });
@@ -159,8 +160,11 @@ function renderLock(family) {
   }
 
   async function submitPin() {
+    if (!form.isConnected) return; // 解錠後に画面が替わったあとの残入力で発火しない（v49）
     const ok = await store.verifyPin(buffer);
     if (ok) {
+      clearTimeout(submitTimer);
+      document.onkeydown = null; // 解錠後も数字キーがPINに入る不具合（v49）
       unlockedFamilyId = family.familyId;
       await renderApp(family);
       return;
@@ -177,24 +181,28 @@ function renderLock(family) {
 
   function push(digit) {
     if (buffer.length >= 4) return;
+    clearTimeout(submitTimer);
     buffer += digit;
     paint();
-    if (buffer.length === 4) setTimeout(() => guarded(submitPin)(), 120);
+    if (buffer.length === 4) submitTimer = setTimeout(() => guarded(submitPin)(), 120);
   }
 
   for (const digit of ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'clear', '0', 'back']) {
     if (digit === 'clear') {
-      pad.append(el('button', { class: 'pin-key pin-key--sub', type: 'button', text: 'クリア', onclick: () => { buffer = ''; paint(); } }));
+      pad.append(el('button', { class: 'pin-key pin-key--sub', type: 'button', text: 'クリア', onclick: () => { clearTimeout(submitTimer); buffer = ''; paint(); } }));
     } else if (digit === 'back') {
-      pad.append(el('button', { class: 'pin-key pin-key--sub', type: 'button', text: '⌫', 'aria-label': '1桁けす', onclick: () => { buffer = buffer.slice(0, -1); paint(); } }));
+      pad.append(el('button', { class: 'pin-key pin-key--sub', type: 'button', text: '⌫', 'aria-label': '1桁けす', onclick: () => { clearTimeout(submitTimer); buffer = buffer.slice(0, -1); paint(); } }));
     } else {
       pad.append(el('button', { class: 'pin-key', type: 'button', text: digit, onclick: () => push(digit) }));
     }
   }
 
   document.onkeydown = (event) => {
+    const tag = event.target?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return; // 入力欄での打鍵をPINにしない（v49）
     if (/^\d$/.test(event.key)) push(event.key);
     else if (event.key === 'Backspace') {
+      clearTimeout(submitTimer);
       buffer = buffer.slice(0, -1);
       paint();
     }
